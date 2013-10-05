@@ -742,3 +742,33 @@ final class Image extends AbstractImage
         return $mimeTypes[$format];
     }
 }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function scale(BoxInterface $size)
+    {
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
+        $dest = $this->createImage($size, 'resize');
+
+        imagealphablending($this->resource, true);
+        imagealphablending($dest, true);
+
+        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
+            $width, $height, imagesx($this->resource), imagesy($this->resource)
+        )) {
+            throw new RuntimeException('Image scale operation failed');
+        }
+
+        imagealphablending($this->resource, false);
+        imagealphablending($dest, false);
+
+        imagedestroy($this->resource);
+
+        $this->resource = $dest;
+
+        return $this;
+    }
+}

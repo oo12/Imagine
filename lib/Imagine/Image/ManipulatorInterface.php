@@ -181,3 +181,15 @@ interface ManipulatorInterface
      */
     public function fill(FillInterface $fill);
 }
+
+    /**
+     * Scales current image and returns self
+     *
+     * @param BoxInterface $size
+     *
+     * @throws RuntimeException
+     *
+     * @return ManipulatorInterface
+     */
+    public function scale(BoxInterface $size);
+}

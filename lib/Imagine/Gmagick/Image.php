@@ -796,3 +796,23 @@ final class Image extends AbstractImage
         $this->palette = $palette;
     }
 }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scale(BoxInterface $size)
+    {
+        try {
+            $this->gmagick->scaleimage(
+                $size->getWidth(),
+                $size->getHeight()
+            );
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Scale operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+}
